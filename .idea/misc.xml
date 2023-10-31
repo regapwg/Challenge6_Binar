@@ -1,0 +1,96 @@
+<project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment viewModel$delegate" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment auth" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.api.APIClient BASE_URL" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment binding" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.api.APIClient client" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment database" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment homeViewModel" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment kategoriMenuAdapter" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (grid)" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (linear)" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (onCreateView)" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (onResponse)" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (remoteGetList)" />
+      <entry_point TYPE="functional.expression" FQNAME="lambda (setPrefLayout)" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment menuAdapter" />
+      <entry_point TYPE="method" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment$-1 void onCancelled(com.google.firebase.database.DatabaseError error)" />
+      <entry_point TYPE="method" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment$-1 void onDataChange(com.google.firebase.database.DataSnapshot snapshot)" />
+      <entry_point TYPE="method" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment$-1 void onFailure(retrofit2.Call&lt;com.example.challenge2_binar.modelCategory.KategoriMenu&gt; call, java.lang.Throwable t)" />
+      <entry_point TYPE="method" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment$-1 void onResponse(retrofit2.Call&lt;com.example.challenge2_binar.modelCategory.KategoriMenu&gt; call, retrofit2.Response&lt;com.example.challenge2_binar.modelCategory.KategoriMenu&gt; response)" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment sharedPreference" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment uid" />
+      <entry_point TYPE="field" FQNAME="com.example.challenge2_binar.ui.fragment.HomeFragment user" />
+    </entry_points>
+    <pattern value="com.example.challenge2_binar.modelCategory.KategoriData" method="KategoriData" />
+    <pattern value="com.example.challenge2_binar.modelCategory.KategoriData" />
+    <pattern value="com.example.challenge2_binar.modelCategory.KategoriMenu" method="KategoriMenu" />
+    <pattern value="com.example.challenge2_binar.produk.ListMenu" method="ListMenu" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" />
+    <pattern value="com.example.challenge2_binar.order.OrderResponse" method="OrderResponse" />
+    <pattern value="com.example.challenge2_binar.ExampleUnitTest" method="addition_isCorrect" />
+    <pattern value="com.example.challenge2_binar.api.APIClient" />
+    <pattern value="com.example.challenge2_binar.api.APIService" />
+    <pattern value="com.example.challenge2_binar.App" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" method="deleteAll" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" method="deleteById" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.DetailMenuFragment" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.DialogFragment" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.EditProfileFragment" />
+    <pattern value="com.example.challenge2_binar.ExampleInstrumentedTest" />
+    <pattern value="com.example.challenge2_binar.ExampleUnitTest" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" method="getAllCartItems" />
+    <pattern value="com.example.challenge2_binar.viewModel.SimpleViewModel" method="getAllCategory" />
+    <pattern value="com.example.challenge2_binar.api.APIService" method="getCategory" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="getDataUser" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="grid" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.KeranjangFragment" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.KonfirmasiPesananFragment" />
+    <pattern value="com.example.challenge2_binar.ui.LoginActivity" />
+    <pattern value="com.example.challenge2_binar.ui.MainActivity" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.ProfileFragment" />
+    <pattern value="com.example.challenge2_binar.ui.RegisterActivity" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" method="insert" />
+    <pattern value="com.example.challenge2_binar.modelCategory.KategoriMenu" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="linear" />
+    <pattern value="com.example.challenge2_binar.produk.ListData" />
+    <pattern value="com.example.challenge2_binar.produk.ListData" method="ListData" />
+    <pattern value="com.example.challenge2_binar.produk.ListMenu" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="onCreateView" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="onViewCreated" />
+    <pattern value="com.example.challenge2_binar.order.Order" />
+    <pattern value="com.example.challenge2_binar.order.Order" method="Order" />
+    <pattern value="com.example.challenge2_binar.order.OrderRequest" />
+    <pattern value="com.example.challenge2_binar.order.OrderRequest" method="OrderRequest" />
+    <pattern value="com.example.challenge2_binar.order.OrderResponse" />
+    <pattern value="com.example.challenge2_binar.api.APIService" method="postOrder" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="remoteGetCategory" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="remoteGetList" />
+    <pattern value="com.example.challenge2_binar.util.Resource" />
+    <pattern value="com.example.challenge2_binar.util.Resource" method="Resource" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="setPrefLayout" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChart" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChart" method="SimpleChart" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" />
+    <pattern value="com.example.challenge2_binar.viewModel.SimpleViewModel" />
+    <pattern value="com.example.challenge2_binar.database.SimpleChartDao" method="update" />
+    <pattern value="com.example.challenge2_binar.ExampleInstrumentedTest" method="useAppContext" />
+    <pattern value="com.example.challenge2_binar.ui.fragment.HomeFragment" method="viewLayout" />
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.03129262617347348" />
+      </ProjectState>
+    </option>
+  </component>
+</project>

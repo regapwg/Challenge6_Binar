@@ -1,0 +1,22 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Challenge2_binar" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/heebo</item>
+
+    </style>
+
+    <style name="Theme.Challenge2_binar" parent="Base.Theme.Challenge2_binar" />
+
+
+
+    <style name="TeksBesarBold">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TeksKecilBold">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textHaiBinarian"
+        style="@style/TeksBesarBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/hai"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        style="@style/TeksBesarBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/hai"
+        app:layout_constraintStart_toEndOf="@+id/textHaiBinarian"
+        app:layout_constraintTop_toTopOf="@+id/textHaiBinarian" />
+
+    <TextView
+        android:id="@+id/textMauMakanApa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/mau_makan_apa_hari_ini"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHaiBinarian" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/keranjang"
+        app:layout_constraintEnd_toStartOf="@+id/btnProfile"
+        app:layout_constraintTop_toTopOf="@+id/textHaiBinarian"
+        app:srcCompat="@drawable/ic_keranjang" />
+
+    <ImageView
+        android:id="@+id/btnProfile"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_account" />
+
+    <ImageView
+        android:id="@+id/imageIklan"
+        android:layout_width="378dp"
+        android:layout_height="154dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/iklan_discount_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMauMakanApa"
+        app:srcCompat="@drawable/iklan" />
+
+    <ImageView
+        android:id="@+id/imageDiskon30"
+        android:layout_width="86dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/diskon_30"
+        app:layout_constraintStart_toStartOf="@+id/imageIklan"
+        app:layout_constraintTop_toTopOf="@id/imageIklan"
+        app:srcCompat="@drawable/sale" />
+
+    <TextView
+        android:id="@+id/textDiskon30"
+        style="@style/TeksBesarBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/diskon_30"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/imageDiskon30"
+        app:layout_constraintTop_toTopOf="@id/imageIklan" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/pesan_makanan_lewat_aplikasi"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/imageDiskon30"
+        app:layout_constraintTop_toBottomOf="@+id/textDiskon30" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/dan_dapatkan_diskonmu"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/imageDiskon30"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_menu_kategori"
+        android:layout_width="380dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageIklan"
+        tools:listitem="@layout/item_kategori_menu" />
+
+    <TextView
+        android:id="@+id/textListMenu"
+        style="@style/TeksBesarBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/list_menu_makan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_menu_kategori" />
+
+    <ImageView
+        android:id="@+id/imageList"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="14dp"
+        android:contentDescription="@string/list_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textListMenu"
+        app:srcCompat="@drawable/ic_linear" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="380dp"
+        android:layout_height="430dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textListMenu"
+        tools:listitem="@layout/item_menu_grid">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progressBarCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_menu_kategori"
+        app:layout_constraintEnd_toEndOf="@+id/rv_menu_kategori"
+        app:layout_constraintStart_toStartOf="@+id/rv_menu_kategori"
+        app:layout_constraintTop_toBottomOf="@+id/imageIklan" />
+
+    <ProgressBar
+        android:id="@+id/progressBarMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rv_menu"
+        app:layout_constraintStart_toStartOf="@+id/rv_menu"
+        app:layout_constraintTop_toTopOf="@+id/rv_menu" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
