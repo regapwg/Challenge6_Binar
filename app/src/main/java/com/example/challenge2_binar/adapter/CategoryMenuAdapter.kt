@@ -12,7 +12,7 @@ import com.example.challenge2_binar.ui.fragment.HomeFragment
 import com.example.challenge2_binar.modelCategory.KategoriData
 
 
-class MenuAdapterHorizontal(
+class CategoryMenuAdapter(
     private val context: HomeFragment,
     private var arrayList: List<KategoriData?>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

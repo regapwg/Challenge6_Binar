@@ -13,7 +13,7 @@ import com.example.challenge2_binar.databinding.ItemMenuListBinding
 import com.example.challenge2_binar.ui.fragment.HomeFragment
 import com.example.challenge2_binar.produk.ListData
 
-class NewAdapter(
+class ListMenuAdapter(
     private val context: HomeFragment,
     private var data: List<ListData?>,
     private val isGrid: Boolean,

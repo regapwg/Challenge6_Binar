@@ -11,21 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.util.SharedPreference
-import com.example.challenge2_binar.adapter.MenuAdapterHorizontal
-import com.example.challenge2_binar.adapter.NewAdapter
+import com.example.challenge2_binar.adapter.CategoryMenuAdapter
+import com.example.challenge2_binar.adapter.ListMenuAdapter
 import com.example.challenge2_binar.api.APIClient
 import com.example.challenge2_binar.databinding.FragmentHomeBinding
 import com.example.challenge2_binar.modelCategory.KategoriMenu
 import com.example.challenge2_binar.user.User
 import com.example.challenge2_binar.util.Status
 import com.example.challenge2_binar.viewModel.HomeViewModel
-import com.example.challenge2_binar.viewModel.SimpleViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,15 +40,14 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var kategoriMenuAdapter : MenuAdapterHorizontal
-    private lateinit var menuAdapter: NewAdapter
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var kategoriMenuAdapter : CategoryMenuAdapter
+    private lateinit var menuAdapter: ListMenuAdapter
     private lateinit var sharedPreference: SharedPreference
     private lateinit var  auth: FirebaseAuth
     private lateinit var  database: DatabaseReference
     private lateinit var uid : String
     private lateinit var user : User
-    private  val viewModel: SimpleViewModel by inject()
+    private  val viewModel: HomeViewModel by inject()
 
 
     override fun onCreateView(
@@ -64,7 +61,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
 
-        kategoriMenuAdapter = MenuAdapterHorizontal(this@HomeFragment, arrayListOf())
+        kategoriMenuAdapter = CategoryMenuAdapter(this@HomeFragment, arrayListOf())
         binding.rvMenuKategori.setHasFixedSize(true)
         binding.rvMenuKategori.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -73,11 +70,9 @@ class HomeFragment : Fragment() {
         remoteGetList()
 
 
-        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-
         sharedPreference = SharedPreference(requireContext())
-        homeViewModel.isGrid.value = sharedPreference.getPreferences()
-        homeViewModel.isGrid.observe(viewLifecycleOwner) {
+        viewModel.isGrid.value = sharedPreference.getPreferences()
+        viewModel.isGrid.observe(viewLifecycleOwner) {
             setPrefLayout()
         }
 
@@ -172,12 +167,12 @@ class HomeFragment : Fragment() {
 
     private fun setPrefLayout() {
         val buttonLayout = binding.imageList
-        val setLayout = homeViewModel.isGrid.value?: sharedPreference.getPreferences()
+        val setLayout = viewModel.isGrid.value?: sharedPreference.getPreferences()
 
         viewLayout(setLayout)
         buttonLayout.setOnClickListener {
             val updateLayout = !setLayout
-            homeViewModel.isGrid.value = updateLayout
+            viewModel.isGrid.value = updateLayout
             sharedPreference.setPreferences(updateLayout)
         }
     }
@@ -185,7 +180,7 @@ class HomeFragment : Fragment() {
 
     private fun linear() {
         binding.rvMenu.layoutManager = LinearLayoutManager(requireActivity())
-        menuAdapter = NewAdapter(this@HomeFragment,arrayListOf(), homeViewModel.isGrid.value ?: false, listener = { pickItem ->
+        menuAdapter = ListMenuAdapter(this@HomeFragment,arrayListOf(), viewModel.isGrid.value ?: false, listener = { pickItem ->
                 val bundle = bundleOf("pickItem" to pickItem)
                 findNavController().navigate(R.id.action_homeFragment_to_detailMenuFragment, bundle)
         })
@@ -196,7 +191,7 @@ class HomeFragment : Fragment() {
 
     private fun grid() {
         binding.rvMenu.layoutManager = GridLayoutManager(requireActivity(), 2)
-        menuAdapter = NewAdapter(this@HomeFragment,arrayListOf(), homeViewModel.isGrid.value ?: false, listener = { pickItem ->
+        menuAdapter = ListMenuAdapter(this@HomeFragment,arrayListOf(), viewModel.isGrid.value ?: false, listener = { pickItem ->
             val bundle = bundleOf("pickItem" to pickItem)
             findNavController().navigate(R.id.action_homeFragment_to_detailMenuFragment, bundle)
         })
