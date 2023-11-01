@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge2_binar.adapter.KonfirmasiKeranjangAdapter
 import com.example.challenge2_binar.api.APIClient
@@ -16,13 +15,13 @@ import com.example.challenge2_binar.order.OrderRequest
 import com.example.challenge2_binar.order.OrderResponse
 import com.example.challenge2_binar.user.User
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
-import com.example.challenge2_binar.util.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.koin.android.ext.android.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +31,7 @@ class KonfirmasiPesananFragment : Fragment() {
 
     private var _binding: FragmentKonfirmasiPesananBinding? = null
     private val binding get() = _binding!!
-    private lateinit var keranjangViewModel: KeranjangViewModel
+    private  val keranjangViewModel: KeranjangViewModel by inject()
     private lateinit var keranjangAdapter: KonfirmasiKeranjangAdapter
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
@@ -48,9 +47,7 @@ class KonfirmasiPesananFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentKonfirmasiPesananBinding.inflate(inflater, container, false)
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        keranjangViewModel =
-            ViewModelProvider(this, viewModelFactory)[KeranjangViewModel::class.java]
+
 
         setupRecyclerView()
         buttonUpBack()

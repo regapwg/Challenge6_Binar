@@ -1,6 +1,6 @@
 package com.example.challenge2_binar.viewModel
 
-import android.app.Application
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +10,7 @@ import com.example.challenge2_binar.database.SimpleChart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class KeranjangViewModel (application: Application) : ViewModel() {
-
-    private val repository: Repository = Repository(application)
+class KeranjangViewModel (private val repository: Repository) : ViewModel() {
 
     val getAllitems: LiveData<List<SimpleChart>> = repository.getAllItems()
 

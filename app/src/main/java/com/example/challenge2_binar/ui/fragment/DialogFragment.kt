@@ -8,19 +8,17 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.FragmentDialogBinding
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
-import com.example.challenge2_binar.util.ViewModelFactory
-
+import org.koin.android.ext.android.inject
 
 
 class DialogFragment : DialogFragment() {
 
     private lateinit var binding : FragmentDialogBinding
-    private lateinit var keranjangViewModel: KeranjangViewModel
+    private val keranjangViewModel: KeranjangViewModel by inject()
 
 
 
@@ -30,9 +28,6 @@ class DialogFragment : DialogFragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentDialogBinding.inflate(inflater, container, false)
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        keranjangViewModel = ViewModelProvider(this, viewModelFactory)[KeranjangViewModel::class.java]
-
         return binding.root
     }
 

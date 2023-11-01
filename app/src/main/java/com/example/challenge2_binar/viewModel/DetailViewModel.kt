@@ -1,6 +1,6 @@
 package com.example.challenge2_binar.viewModel
 
-import android.app.Application
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,8 @@ import com.example.challenge2_binar.produk.ListData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(application: Application) : ViewModel(){
+class DetailViewModel(private val repository: Repository) : ViewModel(){
+
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
     val counter: LiveData<Int> get() = _counter
 
@@ -19,11 +20,6 @@ class DetailViewModel(application: Application) : ViewModel(){
     val totalPrice: LiveData<Int> = _totalPrice
 
     private val _itemMenu = MutableLiveData<ListData>()
-
-    private val repository: Repository
-    init {
-        repository = Repository(application)
-    }
 
 
     fun incrementCount(){

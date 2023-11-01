@@ -5,19 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.adapter.KeranjangAdapter
 import com.example.challenge2_binar.databinding.FragmentKeranjangBinding
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
-import com.example.challenge2_binar.util.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 
 class KeranjangFragment : Fragment() {
     private lateinit var binding: FragmentKeranjangBinding
-    private lateinit var keranjangViewModel: KeranjangViewModel
+    private val keranjangViewModel: KeranjangViewModel by inject()
     private lateinit var keranjangAdapter: KeranjangAdapter
 
 
@@ -28,8 +27,6 @@ class KeranjangFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKeranjangBinding.inflate(inflater, container, false)
 
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        keranjangViewModel = ViewModelProvider(this, viewModelFactory)[KeranjangViewModel::class.java]
 
         setupRecyclerView()
 

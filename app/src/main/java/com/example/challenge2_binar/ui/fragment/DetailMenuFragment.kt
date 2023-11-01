@@ -7,21 +7,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.FragmentDetailMenuBinding
 import com.example.challenge2_binar.produk.ListData
 import com.example.challenge2_binar.viewModel.DetailViewModel
-import com.example.challenge2_binar.util.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 class DetailMenuFragment : Fragment() {
     private var _binding: FragmentDetailMenuBinding? = null
     private val binding get() = _binding!!
-    private lateinit var detailViewModel: DetailViewModel
+    private  val detailViewModel: DetailViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +29,6 @@ class DetailMenuFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentDetailMenuBinding.inflate(inflater, container, false)
 
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        detailViewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
         detailViewModel.counter.observe(viewLifecycleOwner) { result ->
             binding.tvTotal.text = result.toString()
         }

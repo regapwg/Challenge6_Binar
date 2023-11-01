@@ -1,23 +1,18 @@
 package com.example.challenge2_binar.repository
 
-import android.app.Application
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.challenge2_binar.database.SimpleChart
 import com.example.challenge2_binar.database.SimpleChartDao
-import com.example.challenge2_binar.database.SimpleDatabase
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class Repository(application: Application)  {
+class Repository(private val simpleChartDao: SimpleChartDao)  {
 
-    private val simpleChartDao: SimpleChartDao
+
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
-    init {
-        val db = SimpleDatabase.getInstance(application)
-        simpleChartDao = db.simpleChartDao
-    }
 
     fun insert(simpleChart: SimpleChart) {
         executorService.execute {
