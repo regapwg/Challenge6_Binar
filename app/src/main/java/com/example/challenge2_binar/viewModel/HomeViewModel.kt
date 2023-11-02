@@ -15,6 +15,14 @@ class HomeViewModel (private val repository: MenuRepository) : ViewModel() {
     }
     fun getAllCategory() = liveData(Dispatchers.IO) {
         try {
+            emit(Resource.success( repository.getCategory()))
+        } catch (exception: Exception) {
+            emit(Resource.error(null,exception.message ?: "Error Occurred!"))
+        }
+    }
+
+    fun getAllList() = liveData(Dispatchers.IO) {
+        try {
             emit(Resource.success( repository.getList()))
         } catch (exception: Exception) {
             emit(Resource.error(null,exception.message ?: "Error Occurred!"))

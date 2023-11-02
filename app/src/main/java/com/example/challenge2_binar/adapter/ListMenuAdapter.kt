@@ -11,7 +11,7 @@ import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.ItemMenuGridBinding
 import com.example.challenge2_binar.databinding.ItemMenuListBinding
 import com.example.challenge2_binar.ui.fragment.HomeFragment
-import com.example.challenge2_binar.produk.ListData
+import com.example.challenge2_binar.api.produk.ListData
 
 class ListMenuAdapter(
     private val context: HomeFragment,
@@ -75,11 +75,6 @@ class ListMenuAdapter(
         this.data = datalist
         notifyDataSetChanged()
     }
-
-//    interface OnAdapterListener{
-//        fun onClick(data: ListData?)
-//    }
-
 
     class GridMenuHolder(private val binding: ItemMenuGridBinding) :
         RecyclerView.ViewHolder(binding.root) {

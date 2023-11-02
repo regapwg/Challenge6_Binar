@@ -15,12 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge2_binar.R
-import com.example.challenge2_binar.util.SharedPreference
+import com.example.challenge2_binar.util.ListViewSharedPreference
 import com.example.challenge2_binar.adapter.CategoryMenuAdapter
 import com.example.challenge2_binar.adapter.ListMenuAdapter
-import com.example.challenge2_binar.api.APIClient
 import com.example.challenge2_binar.databinding.FragmentHomeBinding
-import com.example.challenge2_binar.modelCategory.KategoriMenu
 import com.example.challenge2_binar.user.User
 import com.example.challenge2_binar.util.Status
 import com.example.challenge2_binar.viewModel.HomeViewModel
@@ -32,9 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 
 class HomeFragment : Fragment() {
@@ -42,12 +38,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var kategoriMenuAdapter : CategoryMenuAdapter
     private lateinit var menuAdapter: ListMenuAdapter
-    private lateinit var sharedPreference: SharedPreference
     private lateinit var  auth: FirebaseAuth
     private lateinit var  database: DatabaseReference
     private lateinit var uid : String
     private lateinit var user : User
     private  val viewModel: HomeViewModel by inject()
+    private val listViewSharedPreference: ListViewSharedPreference by inject()
 
 
     override fun onCreateView(
@@ -70,8 +66,7 @@ class HomeFragment : Fragment() {
         remoteGetList()
 
 
-        sharedPreference = SharedPreference(requireContext())
-        viewModel.isGrid.value = sharedPreference.getPreferences()
+        viewModel.isGrid.value = listViewSharedPreference.getPreferences()
         viewModel.isGrid.observe(viewLifecycleOwner) {
             setPrefLayout()
         }
@@ -83,37 +78,56 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun remoteGetCategory(){
-        APIClient.instance.getCategory()
-            .enqueue(object : Callback<KategoriMenu> {
-                override fun onResponse(
-                    call: Call<KategoriMenu>,
-                    response: Response<KategoriMenu>
-                ) {
-                    val body = response.body()
-                    Log.e("SimpleNetworking", Gson().toJson(body))
-                    body?.let {
-                        val data = body.data
-                        val status = body.status != null
-                        if (status) {
-                            if (!data.isNullOrEmpty()) {
-                                binding.progressBarCategory.isVisible = false
-                                kategoriMenuAdapter.setData(data)
-                            }
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<KategoriMenu>, t: Throwable) {
+//    private fun remoteGetCategory(){
+//        APIClient.instance.getCategory()
+//            .enqueue(object : Callback<KategoriMenu> {
+//                override fun onResponse(
+//                    call: Call<KategoriMenu>,
+//                    response: Response<KategoriMenu>
+//                ) {
+//                    val body = response.body()
+//                    Log.e("SimpleNetworking", Gson().toJson(body))
+//                    body?.let {
+//                        val data = body.data
+//                        val status = body.status != null
+//                        if (status) {
+//                            if (!data.isNullOrEmpty()) {
+//                                binding.progressBarCategory.isVisible = false
+//                                kategoriMenuAdapter.setData(data)
+//                            }
+//                        }
+//                    }
+//                }
+//                override fun onFailure(call: Call<KategoriMenu>, t: Throwable) {
+//                    binding.progressBarCategory.isVisible = false
+//                    Log.e("SimpleNetworking", t.message.toString())
+//                }
+//            })
+//    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    fun remoteGetCategory(){
+        viewModel.getAllCategory().observe(this){
+            when (it.status){
+                Status.SUCCESS -> {
+                    Log.e("SimpleNetworking", Gson().toJson(it.data))
                     binding.progressBarCategory.isVisible = false
-                    Log.e("SimpleNetworking", t.message.toString())
+                    it.data?.data?.let { it1 -> kategoriMenuAdapter.setData(it1) }
                 }
-            })
+                Status.ERROR -> {
+                    binding.progressBarCategory.isVisible = false
+                    Log.e("SimpleNetworking", it.message.toString())
+                }
+                Status.LOADING -> {
+                    binding.progressBarCategory.isVisible = true
+                }
+            }
+        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun remoteGetList(){
-        viewModel.getAllCategory().observe(this){
-
+        viewModel.getAllList().observe(this){
             when (it.status){
                 Status.SUCCESS -> {
                     Log.e("SimpleNetworking", Gson().toJson(it.data))
@@ -167,13 +181,13 @@ class HomeFragment : Fragment() {
 
     private fun setPrefLayout() {
         val buttonLayout = binding.imageList
-        val setLayout = viewModel.isGrid.value?: sharedPreference.getPreferences()
+        val setLayout = viewModel.isGrid.value?: listViewSharedPreference.getPreferences()
 
         viewLayout(setLayout)
         buttonLayout.setOnClickListener {
             val updateLayout = !setLayout
             viewModel.isGrid.value = updateLayout
-            sharedPreference.setPreferences(updateLayout)
+            listViewSharedPreference.setPreferences(updateLayout)
         }
     }
 

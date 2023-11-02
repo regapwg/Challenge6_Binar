@@ -4,6 +4,8 @@ import com.example.challenge2_binar.api.APIClient
 import com.example.challenge2_binar.database.SimpleDatabase
 import com.example.challenge2_binar.repository.MenuRepository
 import com.example.challenge2_binar.repository.Repository
+import com.example.challenge2_binar.util.ListViewSharedPreference
+import com.example.challenge2_binar.util.LoginSharedPreference
 import com.example.challenge2_binar.viewModel.DetailViewModel
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
 import com.example.challenge2_binar.viewModel.HomeViewModel
@@ -13,6 +15,7 @@ import org.koin.dsl.module
 object KoinModule {
     val dataModule
         get() = module {
+            //DB
             single { SimpleDatabase.getInstance(context = get()) }
             factory { get<SimpleDatabase>().simpleChartDao }
 
@@ -22,6 +25,10 @@ object KoinModule {
             //REPOSITORY
             factory { MenuRepository(get()) }
             factory { Repository(get()) }
+
+            //sharedpref
+            single {LoginSharedPreference(context = get())}
+            single { ListViewSharedPreference(context = get()) }
         }
 
     val uiModule

@@ -1,4 +1,4 @@
-package com.example.challenge2_binar.produk
+package com.example.challenge2_binar.api.produk
 
 data class ListMenu(
     val code: Int?,

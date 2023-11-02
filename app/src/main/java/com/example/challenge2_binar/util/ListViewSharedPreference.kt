@@ -4,7 +4,7 @@ import android.content.Context
 
 
 @Suppress("BooleanMethodIsAlwaysInverted")
-class SharedPreference(context: Context) {
+class ListViewSharedPreference(context: Context) {
     private val sharedPreference = "userPrefer"
     private var preferences = context.getSharedPreferences(sharedPreference, 0)
 

@@ -10,13 +10,14 @@ import com.example.challenge2_binar.databinding.ActivityLoginBinding
 import com.example.challenge2_binar.util.LoginSharedPreference
 import com.example.challenge2_binar.util.LoginSharedPreference.Companion.is_login
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var sharedPreference: LoginSharedPreference
+    private val sharedPreference: LoginSharedPreference by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -25,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        sharedPreference = LoginSharedPreference(this)
         checkLogin()
 
         binding.crashButton.setOnClickListener {

@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge2_binar.adapter.KonfirmasiKeranjangAdapter
 import com.example.challenge2_binar.api.APIClient
 import com.example.challenge2_binar.databinding.FragmentKonfirmasiPesananBinding
-import com.example.challenge2_binar.order.Order
-import com.example.challenge2_binar.order.OrderRequest
-import com.example.challenge2_binar.order.OrderResponse
+import com.example.challenge2_binar.api.order.Order
+import com.example.challenge2_binar.api.order.OrderRequest
+import com.example.challenge2_binar.api.order.OrderResponse
 import com.example.challenge2_binar.user.User
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
 import com.google.firebase.auth.FirebaseAuth

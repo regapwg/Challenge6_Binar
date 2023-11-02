@@ -9,12 +9,13 @@ import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.ItemKategoriMenuBinding
 import com.example.challenge2_binar.ui.fragment.HomeFragment
-import com.example.challenge2_binar.modelCategory.KategoriData
+import com.example.challenge2_binar.api.modelCategory.KategoriData
+
 
 
 class CategoryMenuAdapter(
     private val context: HomeFragment,
-    private var arrayList: List<KategoriData?>
+    private var data: List<KategoriData?>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -27,29 +28,26 @@ class CategoryMenuAdapter(
     @SuppressLint("CheckResult")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewKategoriHolder = holder as MenuKategoriHolder
-        viewKategoriHolder.bindContent(arrayList[position] as KategoriData)
+        viewKategoriHolder.bindContent(data[position] as KategoriData)
 
         Glide.with(context)
-            .load(arrayList[position]?.image_url)
+            .load(data[position]?.image_url)
             .into(holder.image)
     }
 
-    override fun getItemCount(): Int = arrayList.size
+    override fun getItemCount(): Int = data.size
+
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: List<KategoriData?>){
-        this.arrayList = data
+    fun setData(dataCategory: List<KategoriData?>) {
+        this.data = dataCategory
         notifyDataSetChanged()
     }
 
     class MenuKategoriHolder(private val binding: ItemKategoriMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val image: ImageView = itemView.findViewById(R.id.imgViewCategory)
-
-
         fun bindContent(kategoriData: KategoriData) {
-
-//        binding.imgView.setImageResource(kategoriData.image_url)
             binding.tvMenuKategori.text = kategoriData.nama
         }
     }

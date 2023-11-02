@@ -4,4 +4,5 @@ import com.example.challenge2_binar.api.APIService
 
 class MenuRepository(private val apiService: APIService) {
     suspend fun getList() = apiService.getList()
+    suspend fun getCategory() = apiService.getCategory()
 }

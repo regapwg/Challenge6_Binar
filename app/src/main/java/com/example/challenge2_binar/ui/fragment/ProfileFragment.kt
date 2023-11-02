@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+import org.koin.android.ext.android.inject
 
 
 class ProfileFragment : Fragment() {
@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
     private lateinit var uid : String
     private lateinit var user : User
 
-    private lateinit var sharedPreference: LoginSharedPreference
+    private val sharedPreference: LoginSharedPreference by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,9 +73,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logout() {
-        sharedPreference = LoginSharedPreference(requireContext())
         sharedPreference.clearPreferences()
-
         auth = FirebaseAuth.getInstance()
         auth.signOut()
         findNavController().navigate(R.id.action_profileFragment_to_loginActivity)

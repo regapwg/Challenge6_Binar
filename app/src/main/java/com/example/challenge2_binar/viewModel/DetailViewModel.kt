@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.challenge2_binar.repository.Repository
 import com.example.challenge2_binar.database.SimpleChart
-import com.example.challenge2_binar.produk.ListData
+import com.example.challenge2_binar.api.produk.ListData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

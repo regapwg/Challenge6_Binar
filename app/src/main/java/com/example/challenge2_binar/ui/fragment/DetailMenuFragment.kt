@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.FragmentDetailMenuBinding
-import com.example.challenge2_binar.produk.ListData
+import com.example.challenge2_binar.api.produk.ListData
 import com.example.challenge2_binar.viewModel.DetailViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar

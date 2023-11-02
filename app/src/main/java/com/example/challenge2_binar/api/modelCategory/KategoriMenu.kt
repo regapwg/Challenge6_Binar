@@ -1,4 +1,4 @@
-package com.example.challenge2_binar.modelCategory
+package com.example.challenge2_binar.api.modelCategory
 
 data class KategoriMenu(
     val code: Int?,
