@@ -53,18 +53,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.btnProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-        }
-
-        kategoriMenuAdapter = CategoryMenuAdapter(this@HomeFragment, arrayListOf())
-        binding.rvMenuKategori.setHasFixedSize(true)
-        binding.rvMenuKategori.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvMenuKategori.adapter = kategoriMenuAdapter
         remoteGetCategory()
         remoteGetList()
-
+        setupRvCategory()
 
         viewModel.isGrid.value = listViewSharedPreference.getPreferences()
         viewModel.isGrid.observe(viewLifecycleOwner) {
@@ -75,35 +66,12 @@ class HomeFragment : Fragment() {
         grid()
         setPrefLayout()
 
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+
         return binding.root
     }
-
-//    private fun remoteGetCategory(){
-//        APIClient.instance.getCategory()
-//            .enqueue(object : Callback<KategoriMenu> {
-//                override fun onResponse(
-//                    call: Call<KategoriMenu>,
-//                    response: Response<KategoriMenu>
-//                ) {
-//                    val body = response.body()
-//                    Log.e("SimpleNetworking", Gson().toJson(body))
-//                    body?.let {
-//                        val data = body.data
-//                        val status = body.status != null
-//                        if (status) {
-//                            if (!data.isNullOrEmpty()) {
-//                                binding.progressBarCategory.isVisible = false
-//                                kategoriMenuAdapter.setData(data)
-//                            }
-//                        }
-//                    }
-//                }
-//                override fun onFailure(call: Call<KategoriMenu>, t: Throwable) {
-//                    binding.progressBarCategory.isVisible = false
-//                    Log.e("SimpleNetworking", t.message.toString())
-//                }
-//            })
-//    }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun remoteGetCategory(){
@@ -143,6 +111,14 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setupRvCategory(){
+        kategoriMenuAdapter = CategoryMenuAdapter(requireContext(), arrayListOf())
+        binding.rvMenuKategori.setHasFixedSize(true)
+        binding.rvMenuKategori.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMenuKategori.adapter = kategoriMenuAdapter
     }
 
 

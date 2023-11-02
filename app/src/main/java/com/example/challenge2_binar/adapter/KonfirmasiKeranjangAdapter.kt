@@ -1,6 +1,7 @@
 package com.example.challenge2_binar.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,7 +15,7 @@ import com.example.challenge2_binar.ui.fragment.KonfirmasiPesananFragment
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class KonfirmasiKeranjangAdapter(private val context: KonfirmasiPesananFragment,
+class KonfirmasiKeranjangAdapter(private val context: Context,
                                  private val keranjangViewModel: KeranjangViewModel) :
     RecyclerView.Adapter<KonfirmasiKeranjangAdapter.KeranjangHolder>() {
 

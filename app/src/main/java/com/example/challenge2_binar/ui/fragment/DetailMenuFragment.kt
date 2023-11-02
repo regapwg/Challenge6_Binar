@@ -50,8 +50,6 @@ class DetailMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         val dataDetail = arguments?.getParcelable<ListData?>("pickItem")
         dataDetail?.let {
             binding.tvMenuu.text = dataDetail.nama

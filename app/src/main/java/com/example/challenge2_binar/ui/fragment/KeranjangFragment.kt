@@ -27,19 +27,17 @@ class KeranjangFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKeranjangBinding.inflate(inflater, container, false)
 
-
         setupRecyclerView()
 
         binding.btnPesan.setOnClickListener {
             findNavController().navigate(R.id.action_keranjangFragment_to_konfirmasiPesananFragment)
         }
 
-
         return binding.root
     }
 
     private fun setupRecyclerView() {
-        keranjangAdapter = KeranjangAdapter(this,keranjangViewModel)
+        keranjangAdapter = KeranjangAdapter(requireContext(),keranjangViewModel)
         binding.rvKeranjang.setHasFixedSize(true)
         binding.rvKeranjang.layoutManager = LinearLayoutManager(requireContext())
         binding.rvKeranjang.adapter = keranjangAdapter

@@ -69,6 +69,7 @@ class KonfirmasiPesananFragment : Fragment() {
                 total = totalHarga,
                 orders = arrayListOrder
             )
+
             APIClient.instance.postOrder(orderRequest).enqueue(object : Callback<OrderResponse> {
                 override fun onResponse(
                     call: Call<OrderResponse>,
@@ -104,7 +105,7 @@ class KonfirmasiPesananFragment : Fragment() {
 
     private fun setupRecyclerView() {
         keranjangAdapter =
-            KonfirmasiKeranjangAdapter(this@KonfirmasiPesananFragment, keranjangViewModel)
+            KonfirmasiKeranjangAdapter(requireContext(), keranjangViewModel)
         binding.rvKeranjang.setHasFixedSize(true)
         binding.rvKeranjang.layoutManager = LinearLayoutManager(requireContext())
         binding.rvKeranjang.adapter = keranjangAdapter
@@ -113,9 +114,7 @@ class KonfirmasiPesananFragment : Fragment() {
             keranjangAdapter.data(it)
         }
 
-        keranjangViewModel.itemLiveData.observe(viewLifecycleOwner) {
-
-        }
+        keranjangViewModel.itemLiveData.observe(viewLifecycleOwner) {}
 
         keranjangViewModel.totalPrice.observe(viewLifecycleOwner) {
             binding.tvTotallPembayaran.text = it.toString()

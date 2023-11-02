@@ -1,6 +1,7 @@
 package com.example.challenge2_binar.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,7 +15,7 @@ import com.example.challenge2_binar.api.modelCategory.KategoriData
 
 
 class CategoryMenuAdapter(
-    private val context: HomeFragment,
+    private val context: Context,
     private var data: List<KategoriData?>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
