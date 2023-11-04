@@ -1,4 +1,4 @@
-package com.example.challenge2_binar.database
+package com.example.challenge2_binar.database.cartDb
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

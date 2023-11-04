@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
@@ -12,13 +13,15 @@ import com.example.challenge2_binar.databinding.ItemMenuGridBinding
 import com.example.challenge2_binar.databinding.ItemMenuListBinding
 import com.example.challenge2_binar.ui.fragment.HomeFragment
 import com.example.challenge2_binar.api.produk.ListData
+import com.example.challenge2_binar.api.produk.ListMenu
+import com.example.challenge2_binar.util.MenuDiffUtil
 
 class ListMenuAdapter(
     private val context: HomeFragment,
-    private var data: List<ListData?>,
     private val isGrid: Boolean,
     private var listener: (ListData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var menu = emptyList<ListData>()
 
 
     @SuppressLint("SuspiciousIndentation")
@@ -40,40 +43,40 @@ class ListMenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (isGrid) {
             val gridHolder = holder as GridMenuHolder
-            gridHolder.onBind(data[position] as ListData)
+            gridHolder.onBind(menu[position])
 
-            val listenerItem = data[position]
+            val listenerItem = menu[position]
 
             Glide.with(context)
-                .load(data[position]?.image_url)
+                .load(menu[position].image_url)
                 .into(holder.image)
 
             holder.itemView.setOnClickListener {
-                listener(listenerItem as ListData)
+                listener(listenerItem)
             }
 
         } else {
             val linearholder = holder as LinearMenuHolder
-            linearholder.onBind(data[position] as ListData)
-            val listenerItem = data[position]
+            linearholder.onBind(menu[position])
+            val listenerItem = menu[position]
 
             Glide.with(context)
-                .load(data[position]?.image_url)
+                .load(menu[position].image_url)
                 .into(holder.image)
 
             holder.itemView.setOnClickListener {
-                listener(listenerItem as ListData)
+                listener(listenerItem)
             }
         }
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = menu.size
 
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(datalist: List<ListData?>) {
-        this.data = datalist
-        notifyDataSetChanged()
+    fun setData(datalist: ListMenu) {
+        val diffUtil = MenuDiffUtil(menu, datalist.data)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
+        menu = datalist.data
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     class GridMenuHolder(private val binding: ItemMenuGridBinding) :

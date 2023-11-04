@@ -1,4 +1,4 @@
-package com.example.challenge2_binar.database
+package com.example.challenge2_binar.database.cartDb
 
 import android.content.Context
 import androidx.room.Database
@@ -14,7 +14,7 @@ abstract class SimpleDatabase : RoomDatabase(){
         @Volatile
         private var INSTANCE: SimpleDatabase? = null
 
-        fun getInstance(context: Context): SimpleDatabase{
+        fun getInstance(context: Context): SimpleDatabase {
             synchronized(this){
                 var instance = INSTANCE
 

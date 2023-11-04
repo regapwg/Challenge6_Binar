@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.challenge2_binar.repository.Repository
-import com.example.challenge2_binar.database.SimpleChart
+import com.example.challenge2_binar.repository.CartRepository
+import com.example.challenge2_binar.database.cartDb.SimpleChart
 import com.example.challenge2_binar.api.produk.ListData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val repository: Repository) : ViewModel(){
+class DetailViewModel(private val cartRepository: CartRepository) : ViewModel(){
 
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
     val counter: LiveData<Int> get() = _counter
@@ -50,7 +50,7 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
 
     private fun insertCartItem(cartItem: SimpleChart) {
         viewModelScope.launch(Dispatchers.IO){
-            repository.insert(cartItem)
+            cartRepository.insert(cartItem)
         }
     }
 

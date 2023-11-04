@@ -3,16 +3,15 @@ package com.example.challenge2_binar.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.challenge2_binar.database.SimpleChart
-import com.example.challenge2_binar.database.SimpleChartDao
+import com.example.challenge2_binar.database.cartDb.SimpleChart
+import com.example.challenge2_binar.database.cartDb.SimpleChartDao
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class Repository(private val simpleChartDao: SimpleChartDao)  {
+class CartRepository(private val simpleChartDao: SimpleChartDao)  {
 
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
-
 
     fun insert(simpleChart: SimpleChart) {
         executorService.execute {

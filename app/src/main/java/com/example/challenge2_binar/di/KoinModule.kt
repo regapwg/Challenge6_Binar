@@ -1,9 +1,12 @@
 package com.example.challenge2_binar.di
 
 import com.example.challenge2_binar.api.APIClient
-import com.example.challenge2_binar.database.SimpleDatabase
+import com.example.challenge2_binar.database.cartDb.SimpleDatabase
+import com.example.challenge2_binar.database.menuDb.MenuDatabase
+import com.example.challenge2_binar.repository.LocalData
 import com.example.challenge2_binar.repository.MenuRepository
-import com.example.challenge2_binar.repository.Repository
+import com.example.challenge2_binar.repository.NetworkData
+import com.example.challenge2_binar.repository.CartRepository
 import com.example.challenge2_binar.util.ListViewSharedPreference
 import com.example.challenge2_binar.util.LoginSharedPreference
 import com.example.challenge2_binar.viewModel.DetailViewModel
@@ -19,12 +22,17 @@ object KoinModule {
             single { SimpleDatabase.getInstance(context = get()) }
             factory { get<SimpleDatabase>().simpleChartDao }
 
+            single { MenuDatabase.getInstance(context = get())}
+            factory { get<MenuDatabase>().menuDao }
+
             //API
             single { APIClient.instance }
 
             //REPOSITORY
-            factory { MenuRepository(get()) }
-            factory { Repository(get()) }
+            factory { MenuRepository(get(),get()) }
+            factory { CartRepository(get()) }
+            factory { LocalData(get()) }
+            factory { NetworkData(get()) }
 
             //sharedpref
             single {LoginSharedPreference(context = get())}

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
 import com.example.challenge2_binar.databinding.ItemKategoriMenuBinding
-import com.example.challenge2_binar.ui.fragment.HomeFragment
 import com.example.challenge2_binar.api.modelCategory.KategoriData
 
 

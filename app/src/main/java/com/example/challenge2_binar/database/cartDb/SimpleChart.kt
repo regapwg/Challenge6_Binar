@@ -1,4 +1,4 @@
-package com.example.challenge2_binar.database
+package com.example.challenge2_binar.database.cartDb
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

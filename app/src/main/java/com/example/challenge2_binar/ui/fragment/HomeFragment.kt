@@ -2,7 +2,6 @@ package com.example.challenge2_binar.ui.fragment
 
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +20,7 @@ import com.example.challenge2_binar.adapter.CategoryMenuAdapter
 import com.example.challenge2_binar.adapter.ListMenuAdapter
 import com.example.challenge2_binar.databinding.FragmentHomeBinding
 import com.example.challenge2_binar.user.User
+import com.example.challenge2_binar.util.Resources
 import com.example.challenge2_binar.util.Status
 import com.example.challenge2_binar.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
@@ -54,7 +56,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         remoteGetCategory()
-        remoteGetList()
+        loadDataList()
         setupRvCategory()
 
         viewModel.isGrid.value = listViewSharedPreference.getPreferences()
@@ -73,9 +75,9 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
-    fun remoteGetCategory(){
-        viewModel.getAllCategory().observe(this){
+
+    private fun remoteGetCategory(){
+        viewModel.getAllCategory().observe(viewLifecycleOwner){
             when (it.status){
                 Status.SUCCESS -> {
                     Log.e("SimpleNetworking", Gson().toJson(it.data))
@@ -93,33 +95,41 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
-    fun remoteGetList(){
-        viewModel.getAllList().observe(this){
-            when (it.status){
-                Status.SUCCESS -> {
-                    Log.e("SimpleNetworking", Gson().toJson(it.data))
+    private fun loadDataList() {
+        Log.d("dataMenu", "read menu from database")
+        lifecycleScope.launch {
+            viewModel.readMenu.observe(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    menuAdapter.setData(database.first().listMenu)
                     binding.progressBarMenu.isVisible = false
-                    it.data?.data?.let { it1 -> menuAdapter.setData(it1) }
+                } else {
+                    remoteGetList()
                 }
-                Status.ERROR -> {
+            }
+        }
+    }
+
+    private fun remoteGetList(){
+        viewModel.getListMenu()
+        viewModel.listMenu.observe(viewLifecycleOwner){response->
+            when (response){
+                is Resources.Success -> {
+                    Log.e("SimpleNetworking", Gson().toJson(response.data))
                     binding.progressBarMenu.isVisible = false
-                    Log.e("SimpleNetworking", it.message.toString())
+                    response.data?.let { menuAdapter.setData(it) }
                 }
-                Status.LOADING -> {
+                is Resources.Error -> {
+                    binding.progressBarMenu.isVisible = false
+                    Log.e("SimpleNetworking", response.message.toString())
+                    loadDataList()
+                }
+                is Resources.Loading -> {
                     binding.progressBarMenu.isVisible = true
                 }
             }
         }
     }
 
-    private fun setupRvCategory(){
-        kategoriMenuAdapter = CategoryMenuAdapter(requireContext(), arrayListOf())
-        binding.rvMenuKategori.setHasFixedSize(true)
-        binding.rvMenuKategori.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvMenuKategori.adapter = kategoriMenuAdapter
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -167,10 +177,17 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setupRvCategory(){
+        kategoriMenuAdapter = CategoryMenuAdapter(requireContext(), arrayListOf())
+        binding.rvMenuKategori.setHasFixedSize(true)
+        binding.rvMenuKategori.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMenuKategori.adapter = kategoriMenuAdapter
+    }
 
     private fun linear() {
         binding.rvMenu.layoutManager = LinearLayoutManager(requireActivity())
-        menuAdapter = ListMenuAdapter(this@HomeFragment,arrayListOf(), viewModel.isGrid.value ?: false, listener = { pickItem ->
+        menuAdapter = ListMenuAdapter(this@HomeFragment, viewModel.isGrid.value ?: false, listener = { pickItem ->
                 val bundle = bundleOf("pickItem" to pickItem)
                 findNavController().navigate(R.id.action_homeFragment_to_detailMenuFragment, bundle)
         })
@@ -178,10 +195,9 @@ class HomeFragment : Fragment() {
         remoteGetList()
     }
 
-
     private fun grid() {
         binding.rvMenu.layoutManager = GridLayoutManager(requireActivity(), 2)
-        menuAdapter = ListMenuAdapter(this@HomeFragment,arrayListOf(), viewModel.isGrid.value ?: false, listener = { pickItem ->
+        menuAdapter = ListMenuAdapter(this@HomeFragment, viewModel.isGrid.value ?: false, listener = { pickItem ->
             val bundle = bundleOf("pickItem" to pickItem)
             findNavController().navigate(R.id.action_homeFragment_to_detailMenuFragment, bundle)
         })

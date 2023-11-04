@@ -9,9 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.challenge2_binar.R
-import com.example.challenge2_binar.database.SimpleChart
+import com.example.challenge2_binar.database.cartDb.SimpleChart
 import com.example.challenge2_binar.databinding.ItemKeranjangBinding
-import com.example.challenge2_binar.ui.fragment.KeranjangFragment
 import com.example.challenge2_binar.viewModel.KeranjangViewModel
 import com.google.android.material.snackbar.Snackbar
 

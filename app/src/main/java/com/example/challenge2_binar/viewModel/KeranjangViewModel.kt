@@ -5,38 +5,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.challenge2_binar.repository.Repository
-import com.example.challenge2_binar.database.SimpleChart
+import com.example.challenge2_binar.repository.CartRepository
+import com.example.challenge2_binar.database.cartDb.SimpleChart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class KeranjangViewModel (private val repository: Repository) : ViewModel() {
+class KeranjangViewModel (private val cartRepository: CartRepository) : ViewModel() {
 
-    val getAllitems: LiveData<List<SimpleChart>> = repository.getAllItems()
+    val getAllitems: LiveData<List<SimpleChart>> = cartRepository.getAllItems()
 
     private val _itemLiveData = MutableLiveData<SimpleChart>()
     val itemLiveData: LiveData<SimpleChart> = _itemLiveData
 
-    var totalPrice: LiveData<Int> = repository.totalPrice()
+    var totalPrice: LiveData<Int> = cartRepository.totalPrice()
 
     fun delete(chartId: Long) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            repository.deleteById(chartId)
+            cartRepository.deleteById(chartId)
         }
     }
 
     fun deleteAllItem() {
         viewModelScope.launch(Dispatchers.IO)
         {
-            repository.deleteAll()
+            cartRepository.deleteAll()
         }
     }
 
     fun update(simpleChart: SimpleChart) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            repository.update(simpleChart)
+            cartRepository.update(simpleChart)
         }
         _itemLiveData.value = simpleChart
 
