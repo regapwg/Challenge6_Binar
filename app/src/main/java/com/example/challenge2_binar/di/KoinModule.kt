@@ -2,6 +2,7 @@ package com.example.challenge2_binar.di
 
 import com.example.challenge2_binar.api.APIClient
 import com.example.challenge2_binar.database.cartDb.SimpleDatabase
+import com.example.challenge2_binar.database.categoryDB.CategoryDatabase
 import com.example.challenge2_binar.database.menuDb.MenuDatabase
 import com.example.challenge2_binar.repository.LocalData
 import com.example.challenge2_binar.repository.MenuRepository
@@ -25,13 +26,16 @@ object KoinModule {
             single { MenuDatabase.getInstance(context = get())}
             factory { get<MenuDatabase>().menuDao }
 
+            single { CategoryDatabase.getInstance(context = get())}
+            factory { get<CategoryDatabase>().categoryDao }
+
             //API
             single { APIClient.instance }
 
             //REPOSITORY
             factory { MenuRepository(get(),get()) }
             factory { CartRepository(get()) }
-            factory { LocalData(get()) }
+            factory { LocalData(get(), get()) }
             factory { NetworkData(get()) }
 
             //sharedpref

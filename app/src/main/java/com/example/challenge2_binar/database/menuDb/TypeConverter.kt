@@ -9,8 +9,8 @@ class TypeConverter {
     private var gson = Gson()
 
     @TypeConverter
-    fun menuToString(listMenuResponse: ListMenu): String {
-        return gson.toJson(listMenuResponse)
+    fun menuToString(listMenu: ListMenu): String {
+        return gson.toJson(listMenu)
     }
 
     @TypeConverter

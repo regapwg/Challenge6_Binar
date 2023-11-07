@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MenuDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMenu(menu: Menu)
 

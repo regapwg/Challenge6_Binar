@@ -5,20 +5,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.challenge2_binar.api.modelCategory.KategoriMenu
 import com.example.challenge2_binar.api.produk.ListMenu
+import com.example.challenge2_binar.database.categoryDB.Category
 import com.example.challenge2_binar.database.menuDb.Menu
 import com.example.challenge2_binar.repository.MenuRepository
 import com.example.challenge2_binar.util.Resources
-import com.example.challenge2_binar.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class HomeViewModel(private val repository: MenuRepository) : ViewModel() {
 
     val isGrid = MutableLiveData<Boolean>().apply { value = true }
+
+
+    val readCategory: LiveData<List<Category>> = repository.local.readCategory().asLiveData()
+    private fun insertCategory(category: Category) = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.insertCategory(category)
+    }
+
+    private var _categoryMenu: MutableLiveData<Resources<KategoriMenu>> = MutableLiveData()
+    val categoryMenu: LiveData<Resources<KategoriMenu>> get() = _categoryMenu
+
 
     val readMenu: LiveData<List<Menu>> = repository.local.readMenu().asLiveData()
     private fun insertMenu(menu: Menu) = viewModelScope.launch(Dispatchers.IO) {
@@ -28,22 +37,37 @@ class HomeViewModel(private val repository: MenuRepository) : ViewModel() {
     private var _listMenu: MutableLiveData<Resources<ListMenu>> = MutableLiveData()
     val listMenu: LiveData<Resources<ListMenu>> get() = _listMenu
 
+
+    fun getCategoryMenu() = viewModelScope.launch {
+        getAllCategory()
+    }
+
+    private suspend fun getAllCategory() {
+        try {
+            val response = repository.remote.getCategory()
+            _categoryMenu.value = Resources.Success(response)
+
+            val categoryMenu = _categoryMenu.value!!.data
+            if (categoryMenu != null) {
+                offlineCategory(categoryMenu)
+            }
+        } catch (exception: Exception) {
+            _categoryMenu.value = Resources.Error("Error: $exception")
+        }
+    }
+    private fun offlineCategory(categoryMenu: KategoriMenu) {
+        val category = Category(categoryMenu)
+        insertCategory(category)
+    }
+
     fun getListMenu() = viewModelScope.launch {
         getAllList()
     }
 
-    fun getAllCategory() = liveData(Dispatchers.IO) {
-        try {
-            emit(Resource.success(repository.remote.getCategory()))
-        } catch (exception: Exception) {
-            emit(Resource.error(null, exception.message ?: "Error Occurred!"))
-        }
-    }
-
     private suspend fun getAllList() {
         try {
-            val response = repository.remote.getList()
-            _listMenu.value = responseListMenu(response)
+            val responses = repository.remote.getListt()
+            _listMenu.value = Resources.Success(responses)
 
             val listMenu = _listMenu.value!!.data
             if (listMenu != null) {
@@ -59,16 +83,4 @@ class HomeViewModel(private val repository: MenuRepository) : ViewModel() {
         insertMenu(menu)
     }
 
-    private fun responseListMenu(response: Response<ListMenu>): Resources<ListMenu> {
-        return when {
-            response.isSuccessful -> {
-                val listMenu = response.body()
-                Resources.Success(listMenu!!)
-            }
-
-            else -> {
-                Resources.Error(response.message())
-            }
-        }
-    }
 }

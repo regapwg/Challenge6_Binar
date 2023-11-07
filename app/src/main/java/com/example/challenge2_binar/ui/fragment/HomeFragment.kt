@@ -21,7 +21,6 @@ import com.example.challenge2_binar.adapter.ListMenuAdapter
 import com.example.challenge2_binar.databinding.FragmentHomeBinding
 import com.example.challenge2_binar.user.User
 import com.example.challenge2_binar.util.Resources
-import com.example.challenge2_binar.util.Status
 import com.example.challenge2_binar.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -55,7 +54,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        remoteGetCategory()
+        loadDataCategory()
         loadDataList()
         setupRvCategory()
 
@@ -75,28 +74,45 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun loadDataCategory() {
+        Log.d("dataCategory", "list category from database")
+        lifecycleScope.launch {
+            viewModel.readCategory.observe(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    kategoriMenuAdapter.setData(database.first().categoryMenu)
+                    binding.progressBarCategory.isVisible = false
+                } else {
+                    remoteGetCategory()
+                }
+            }
+        }
+    }
 
     private fun remoteGetCategory(){
-        viewModel.getAllCategory().observe(viewLifecycleOwner){
-            when (it.status){
-                Status.SUCCESS -> {
-                    Log.e("SimpleNetworking", Gson().toJson(it.data))
+        viewModel.getCategoryMenu()
+        viewModel.categoryMenu.observe(viewLifecycleOwner){response->
+            when (response){
+                is Resources.Success -> {
+                    Log.e("SimpleNetworking", Gson().toJson(response.data))
                     binding.progressBarCategory.isVisible = false
-                    it.data?.data?.let { it1 -> kategoriMenuAdapter.setData(it1) }
+                    response.data?.let { kategoriMenuAdapter.setData(it) }
                 }
-                Status.ERROR -> {
+                is Resources.Error -> {
                     binding.progressBarCategory.isVisible = false
-                    Log.e("SimpleNetworking", it.message.toString())
+                    Log.e("SimpleNetworking", response.message.toString())
+                    loadDataList()
                 }
-                Status.LOADING -> {
+                is Resources.Loading -> {
                     binding.progressBarCategory.isVisible = true
                 }
             }
         }
     }
 
+
+
     private fun loadDataList() {
-        Log.d("dataMenu", "read menu from database")
+        Log.d("dataMenu", "list menu from database")
         lifecycleScope.launch {
             viewModel.readMenu.observe(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) {
@@ -129,8 +145,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -178,7 +192,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRvCategory(){
-        kategoriMenuAdapter = CategoryMenuAdapter(requireContext(), arrayListOf())
+        kategoriMenuAdapter = CategoryMenuAdapter(requireContext())
         binding.rvMenuKategori.setHasFixedSize(true)
         binding.rvMenuKategori.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
